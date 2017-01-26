@@ -22,7 +22,9 @@ bool load_content() {
   geom.add_buffer(colours, BUFFER_INDEXES::COLOUR_BUFFER);
 
   // *********************************
-  // Create mesh object here
+   m = mesh(geom);
+
+   
 
   // *********************************
 
@@ -58,7 +60,7 @@ bool render() {
   glUniformMatrix4fv(eff.get_uniform_location("MVP"), 1, GL_FALSE, value_ptr(MVP));
   // *********************************
   // Render the mesh here
-
+  renderer::render(m);
   // *********************************
   return true;
 }
