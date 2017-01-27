@@ -26,7 +26,7 @@ bool load_content() {
   eff.add_shader("29_Shaders/colour.vert", GL_VERTEX_SHADER);
   eff.add_shader("29_Shaders/colour.frag", GL_FRAGMENT_SHADER);
   // *********************************
-  // Build effect
+  eff.build();
 
   // *********************************
 
@@ -60,6 +60,8 @@ bool render() {
                      value_ptr(MVP));                 // Pointer to matrix data
   // *********************************
   // Set the colour value for the shader here (Hint: rep the Brand, use the NapierRed macro)
+
+  eff.add_shader("NapierRed");
 
   // *********************************
 

@@ -19,22 +19,54 @@ bool load_content() {
   vector<vec3> positions{
       // *********************************
       // Add the position data for triangles here, (6 verts per side)
-      // Front
+	  // Front
+	  vec3(0.0f, 0.0f, 0.0f),
+	  vec3(-1.0f, 1.0f, 0.0f),
+	  vec3(-1.0f, 0.0f, 0.0f),
+	  vec3(0.0f, 0.0f, 0.0f),
+	  vec3(0.0f, 1.0f, 0.0f),
+	  vec3(-1.0f, 1.0f, 0.0f),
 
+	  // Back
+	  vec3(0.0f, 0.0f, 1.0f),
+	  vec3(-1.0f, 1.0f, 1.0f),
+	  vec3(-1.0f, 0.0f, 1.0f),
+	  vec3(0.0f, 0.0f, 1.0f),
+	  vec3(0.0f, 1.0f, 1.0f),
+	  vec3(-1.0f, 1.0f, 1.0f),
 
-      // Back
+	  // Right
+	  vec3(0.0f, 0.0f, 1.0f),
+	  vec3(0.0f, 1.0f, 0.0f),
+	  vec3(0.0f, 0.0f, 0.0f),
+	  vec3(0.0f, 0.0f, 1.0f),
+	  vec3(0.0f, 1.0f, 1.0f),
+	  vec3(0.0f, 1.0f, 0.0f),
 
+	  // Left
+	  vec3(-1.0f, 0.0f, 1.0f),
+	  vec3(-1.0f, 1.0f, 0.0f),
+	  vec3(-1.0f, 0.0f, 0.0f),
+	  vec3(-1.0f, 0.0f, 1.0f),
+	  vec3(-1.0f, 1.0f, 1.0f),
+	  vec3(-1.0f, 1.0f, 0.0f),
 
-      // Right
+	  // Top
+	  vec3(0.0f, 1.0f, 0.0f),
+	  vec3(-1.0f, 1.0f, 1.0f),
+	  vec3(-1.0f, 1.0f, 0.0f),
+	  vec3(0.0f, 1.0f, 0.0f),
+	  vec3(0.0f, 1.0f, 1.0f),
+	  vec3(-1.0f, 1.0f, 1.0),
 
+	  // Bottom
+	  vec3(0.0f, 0.0f, 0.0f),
+	  vec3(-1.0f, 0.0f, 1.0f),
+	  vec3(-1.0f, 0.0f, 0.0f),
+	  vec3(0.0f, 0.0f, 0.0f),
+	  vec3(0.0f, 0.0f, 1.0f),
+	  vec3(-1.0f, 0.0f, 1.0f),
 
-      // Left
-
-
-      // Top
-
-
-      // Bottom
 
 
       // *********************************
