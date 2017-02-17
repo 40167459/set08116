@@ -18,6 +18,6 @@ void main() {
   // Sample the blend texture
 
   // Mix the main samples using r component from blend value
-
+  colour = mix(col1, col2, blend.r);
   // *********************************
 }
