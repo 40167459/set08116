@@ -32,7 +32,7 @@ bool load_content() {
   cam.set_projection(quarter_pi<float>(), renderer::get_screen_aspect(), 0.1f, 1000.0f);
   return true;
 }
-
+//add mesh plane
 
 bool update(float delta_time) {
   // Update the camera
