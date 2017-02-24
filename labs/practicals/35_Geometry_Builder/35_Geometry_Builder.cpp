@@ -16,19 +16,20 @@ bool load_content() {
 
   // *********************************
   // box
+  meshes["box"] = mesh(geometry_builder::create_box());
 
   // Tetrahedron
-
+  meshes["tetrahedron"] = mesh(geometry_builder::create_tetrahedron());
   // Pyramid
-
+  meshes["pyramid"] = mesh(geometry_builder::create_pyramid());
   // Disk
-
+  meshes["disk"] = mesh(geometry_builder::create_disk());
   // Cylinder
-
+  meshes["cylinder"] = mesh(geometry_builder::create_cylinder());
   // Sphere
-
+  meshes["sphere"] = mesh(geometry_builder::create_sphere());
   // Torus
-
+  meshes["torus"] = mesh(geometry_builder::create_torus());
 
   // Set the transforms for your meshes here
   // 5x scale, move(-10.0f, 2.5f, -30.0f)
