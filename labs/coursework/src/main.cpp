@@ -8,7 +8,10 @@ using namespace glm;
 map<string, mesh> meshes;
 effect eff;
 free_camera cam;
-texture tex;
+texture sand;
+texture stone;
+texture pillar;
+directional_light light;
 
 bool load_content() {
 	// Create plane mesh
@@ -17,40 +20,81 @@ bool load_content() {
 	// box
 	meshes["box"] = mesh(geometry_builder::create_box());
 
-	// Tetrahedron
+	// Tetrahedron 
+	/*
 	meshes["tetrahedron"] = mesh(geometry_builder::create_tetrahedron());
+	*/
 	// Pyramid
 	meshes["pyramid"] = mesh(geometry_builder::create_pyramid());
+	meshes["pyramid2"] = mesh(geometry_builder::create_pyramid());
+	meshes["pyramid3"] = mesh(geometry_builder::create_pyramid());
+	/*
 	// Disk
 	meshes["disk"] = mesh(geometry_builder::create_disk());
+	*/
+
 	// Cylinder
 	meshes["cylinder"] = mesh(geometry_builder::create_cylinder());
+	meshes["cylinder2"] = mesh(geometry_builder::create_cylinder());
+	meshes["cylinder3"] = mesh(geometry_builder::create_cylinder());
+	meshes["cylinderTop"] = mesh(geometry_builder::create_cylinder());
+	meshes["cylinderTop2"] = mesh(geometry_builder::create_cylinder());
+	meshes["cylinderTop4"] = mesh(geometry_builder::create_cylinder());
+
+	/*
 	// Sphere
 	meshes["sphere"] = mesh(geometry_builder::create_sphere());
 	// Torus
 	meshes["torus"] = mesh(geometry_builder::create_torus());
+	*/
 
 	// Set the transforms for your meshes here
 	// 5x scale, move(-10.0f, 2.5f, -30.0f)
 	meshes["box"].get_transform().scale = vec3(5.0f, 5.0f, 5.0f);
 	meshes["box"].get_transform().translate(vec3(-10.0f, 2.5f, -30.0f));
 
+	/*
 	// 4x scale, move(-30.0f, 10.0f, -10.0f)
     meshes["tetrahedron"].get_transform().scale = vec3(4.0f, 4.0f, 4.0f);
 	meshes["tetrahedron"].get_transform().translate(vec3(-30.0f, 10.0f, -10.0f));
-	
-	// 5x scale, move(-10.0f, 7.5f, -30.0f)
-	meshes["pyramid"].get_transform().scale = vec3(5.0f, 5.0f, 5.0f);
-	meshes["pyramid"].get_transform().translate(vec3(-10.0f, 7.5f, -30.0f));
 
+	*/
+	
+	// 10x scale, 15x widening, move(-10.0f, 7.5f, -30.0f)
+	meshes["pyramid"].get_transform().scale = vec3(15.0f, 10.0f, 10.0f);
+	meshes["pyramid"].get_transform().translate(vec3(-10.0f, 5.0f, -30.0f));
+
+	// Two thirds scale of previous pyramid
+	meshes["pyramid2"].get_transform().scale = vec3(10.0f, 7.0f, 7.0f);
+	meshes["pyramid2"].get_transform().translate(vec3(-15.0f, 2.5f, -20.0f));
+
+	meshes["pyramid3"].get_transform().scale = vec3(13.0f, 9.0f, 9.0f);
+	meshes["pyramid3"].get_transform().translate(vec3(-5.0f, 4.5f, -45.0f));
+	
+	/*
 	// scale(3.0f, 1.0f, 3.0f), move(-10.0f, 11.5f, -30.0f), 180 rotate X axis
 	meshes["disk"].get_transform().scale = vec3(3.0f, 1.0f, 3.0f);
 	meshes["disk"].get_transform().translate(vec3(-10.0f, 11.5f, -30.0f));
+	*/
 
-	// 5x scale, move(-25.0f, 2.5f, -25.0f)
-	meshes["cylinder"].get_transform().scale = vec3(5.0f, 5.0f, 5.0f);
-	meshes["cylinder"].get_transform().translate(vec3(-25.0f, 2.5f, -25.0f));
+	// 1.5x scale, move(0.0.f, 2.5f, 0.0f)
+	meshes["cylinder"].get_transform().scale = vec3(1.5f, 5.5f, 1.5f);
+	meshes["cylinder"].get_transform().translate(vec3(0.0f, -0.5f, 0.0f));
 
+	// 1.5x scale, move(0.0.f, 2.5f, 0.0f)
+	meshes["cylinder2"].get_transform().scale = vec3(1.5f, 5.5f, 1.5f);
+	meshes["cylinder2"].get_transform().translate(vec3(5.0f, 2.0f, 0.0f));
+
+	meshes["cylinderTop"].get_transform().scale = vec3(2.0f, 0.5f, 2.0f);
+	meshes["cylinderTop"].get_transform().translate(vec3(5.0f, 5.0f, 0.0f));
+
+	meshes["cylinder3"].get_transform().scale = vec3(1.5f, 5.5f, 1.5f);
+	meshes["cylinder3"].get_transform().translate(vec3(0.0f, 2.0f, 5.0f));
+
+	meshes["cylinderTop2"].get_transform().scale = vec3(2.0f, 0.5f, 2.0f);
+	meshes["cylinderTop2"].get_transform().translate(vec3(0.0f, 5.0f, 5.0f));
+
+	/*
 	// 2.5x scale, move(-25.0f, 10.0f, -25.0f)
 	meshes["sphere"].get_transform().scale = vec3(2.5f, 2.5f, 2.5f);
 	meshes["sphere"].get_transform().translate(vec3(-25.0f, 10.0f, -25.0f));
@@ -59,8 +103,17 @@ bool load_content() {
 	meshes["torus"].get_transform().translate(vec3(-25.0f, 10.0f, -25.0f));
 	meshes["torus"].get_transform().rotate(vec3(half_pi<float>(), 0.0f, 0.0f)); 
 
+	*/
+
 	// Load texture
-	tex = texture("textures/grass.jpg");
+	sand = texture("textures/sand3.jpg");
+	stone = texture("textures/pyramid_stones.jpg");
+	pillar = texture("textures/pillar.jpg");
+
+	// Set lighting values
+	light.set_ambient_intensity(vec4(0.3f, 0.3f, 0.3f, 1.0f));
+	light.set_light_colour(vec4(1.0f, 1.0f, 1.0f, 1.0f));
+	light.set_direction(vec3(1.0f, 1.0f, -1.0f));
 
 	// Load in shaders
 	eff.add_shader("shaders/simple_texture.vert", GL_VERTEX_SHADER);
@@ -135,9 +188,26 @@ bool render() {
 		glUniformMatrix4fv(eff.get_uniform_location("MVP"), 1, GL_FALSE, value_ptr(MVP));
 
 		// *********************************
-		// Bind texture to renderer
-
-		// Set the texture value for the shader here
+		if (e.first == "plane")
+		{
+			renderer::bind(sand, 0);
+		}
+		if (e.first == "pyramid")
+		{
+			renderer::bind(stone, 0);
+		}
+		if (e.first == "pyramid2")
+		{
+			renderer::bind(stone, 0);
+		}
+		if (e.first == "box")
+		{
+			renderer::bind(pillar, 0);
+		}
+		if (e.first == "cylinder")
+		{
+			renderer::bind(pillar, 0);
+		}
 
 		// *********************************
 		// Render mesh
