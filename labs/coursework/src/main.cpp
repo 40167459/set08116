@@ -39,7 +39,6 @@ bool load_content() {
 	meshes["cylinder3"] = mesh(geometry_builder::create_cylinder());
 	meshes["cylinderTop"] = mesh(geometry_builder::create_cylinder());
 	meshes["cylinderTop2"] = mesh(geometry_builder::create_cylinder());
-	meshes["cylinderTop4"] = mesh(geometry_builder::create_cylinder());
 
 	/*
 	// Sphere
@@ -50,8 +49,8 @@ bool load_content() {
 
 	// Set the transforms for your meshes here
 	// 5x scale, move(-10.0f, 2.5f, -30.0f)
-	meshes["box"].get_transform().scale = vec3(5.0f, 5.0f, 5.0f);
-	meshes["box"].get_transform().translate(vec3(-10.0f, 2.5f, -30.0f));
+	meshes["box"].get_transform().scale = vec3(15.0f, 1.0f, 1.0f);
+	meshes["box"].get_transform().translate(vec3(-10.0f, 0.5f, -30.0f));
 
 	/*
 	// 4x scale, move(-30.0f, 10.0f, -10.0f)
@@ -105,10 +104,19 @@ bool load_content() {
 
 	*/
 
+	//Set Materials
+	//Pyramid
+
+
+
+
+
+
 	// Load texture
 	sand = texture("textures/sand3.jpg");
 	stone = texture("textures/pyramid_stones.jpg");
 	pillar = texture("textures/pillar.jpg");
+
 
 	// Set lighting values
 	light.set_ambient_intensity(vec4(0.3f, 0.3f, 0.3f, 1.0f));
@@ -177,6 +185,12 @@ bool render() {
 	// Render meshes
 	for (auto &e : meshes) {
 		auto m = e.second;
+		/*
+		// Bind material
+		renderer::bind(m.get_material(), "mat");
+		// Bind light
+		renderer::bind(light, "light");
+		*/
 		// Bind effect
 		renderer::bind(eff);
 		// Create MVP matrix
@@ -187,7 +201,6 @@ bool render() {
 		// Set MVP matrix uniform
 		glUniformMatrix4fv(eff.get_uniform_location("MVP"), 1, GL_FALSE, value_ptr(MVP));
 
-		// *********************************
 		if (e.first == "plane")
 		{
 			renderer::bind(sand, 0);
@@ -209,7 +222,6 @@ bool render() {
 			renderer::bind(pillar, 0);
 		}
 
-		// *********************************
 		// Render mesh
 		renderer::render(m);
 	}
@@ -219,7 +231,7 @@ bool render() {
 
 void main() {
 	// Create application
-	app application("35_Geometry_Builder");
+	app application("CW1");
 	// Set load content, update and render methods
 	application.set_load_content(load_content);
 	application.set_update(update);

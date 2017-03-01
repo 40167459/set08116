@@ -49,40 +49,40 @@ bool load_content() {
   // - all specular is white
   // - all shininess is 25
   // Red box
-
-
-
-
+  meshes["box"].get_material().set_emissive(vec4(0.0f, 0.0f, 0.0f, 1.0f));
+  meshes["box"].get_material().set_diffuse(vec4(1.0f, 0.0f, 0.0f, 1.0f));
+  meshes["box"].get_material().set_specular(vec4(1.0f, 1.0f, 1.0f, 1.0f));
+  meshes["box"].get_material().set_shininess(25.0f);
   // Green tetra
-
-
-
-
+  meshes["tetra"].get_material().set_emissive(vec4(0.0f, 0.0f, 0.0f, 1.0f));
+  meshes["tetra"].get_material().set_diffuse(vec4(0.0f, 1.0f, 0.0f, 1.0f));
+  meshes["tetra"].get_material().set_specular(vec4(1.0f, 1.0f, 1.0f, 1.0f));
+  meshes["tetra"].get_material().set_shininess(25.0f);
   // Blue pyramid
-
-
-
-
+  meshes["pyramid"].get_material().set_emissive(vec4(0.0f, 0.0f, 0.0f, 1.0f));
+  meshes["pyramid"].get_material().set_diffuse(vec4(0.0f, 0.0f, 1.0f, 1.0f));
+  meshes["pyramid"].get_material().set_specular(vec4(1.0f, 1.0f, 1.0f, 1.0f));
+  meshes["pyramid"].get_material().set_shininess(25.0f);
   // Yellow disk
-
-
-
-
+  meshes["disk"].get_material().set_emissive(vec4(0.0f, 0.0f, 0.0f, 1.0f));
+  meshes["disk"].get_material().set_diffuse(vec4(1.0f, 1.0f, 0.0f, 1.0f));
+  meshes["disk"].get_material().set_specular(vec4(1.0f, 1.0f, 1.0f, 1.0f));
+  meshes["disk"].get_material().set_shininess(25.0f);
   // Magenta cylinder
-
-
-
-
+  meshes["cylinder"].get_material().set_emissive(vec4(0.0f, 0.0f, 0.0f, 1.0f));
+  meshes["cylinder"].get_material().set_diffuse(vec4(1.0f, 0.0f, 1.0f, 1.0f));
+  meshes["cylinder"].get_material().set_specular(vec4(1.0f, 1.0f, 1.0f, 1.0f));
+  meshes["cylinder"].get_material().set_shininess(25.0f);
   // Cyan sphere
-
-
-
-
+  meshes["sphere"].get_material().set_emissive(vec4(0.0f, 0.0f, 0.0f, 1.0f));
+  meshes["sphere"].get_material().set_diffuse(vec4(0.0f, 1.0f, 1.0f, 1.0f));
+  meshes["sphere"].get_material().set_specular(vec4(1.0f, 1.0f, 1.0f, 1.0f));
+  meshes["sphere"].get_material().set_shininess(25.0f);
   // White torus
-
-
-
-
+  meshes["torus"].get_material().set_emissive(vec4(0.0f, 0.0f, 0.0f, 1.0f));
+  meshes["torus"].get_material().set_diffuse(vec4(1.0f, 1.0f, 1.0f, 1.0f));
+  meshes["torus"].get_material().set_specular(vec4(1.0f, 1.0f, 1.0f, 1.0f));
+  meshes["torus"].get_material().set_shininess(25.0f);
   // *********************************
 
   // Load texture
@@ -92,7 +92,11 @@ bool load_content() {
   // *********************************
   // Point 0, Position (-25, 5, -15)
   // Red, 20 range
-
+  spot.set_position(vec3(20.0f, 30.0f, 0.0f));
+  spot.set_light_colour(vec4(1.0f, 1.0f, 1.0f, 1.0f));
+  spot.set_direction(normalize(vec3(-1.0f, -1.0f, 0.0f)));
+  spot.set_range(20.0f);
+  spot.set_power(10.0f);
 
 
   // Point 1, Position (-25, 5, -35)
@@ -152,6 +156,14 @@ bool load_content() {
 
   // *********************************
 
+  //Name of fragment shaders required
+  vector<string> frag_shaders
+  {
+	  "shader.frag",
+	  "..\\shader.frag",
+	  "..\\shader.vert",
+  };
+
   // Load in shaders
   eff.add_shader("52_Multifile_Shaders/shader.vert", GL_VERTEX_SHADER);
   // Name of fragment shaders required
@@ -207,24 +219,23 @@ bool render() {
                        GL_FALSE,                        // Transpose the matrix?
                        value_ptr(MVP));                 // Pointer to matrix data
     // *********************************
-    // Set M matrix uniform
-
-    // Set N matrix uniform - remember - 3x3 matrix
-
-    // Bind material
-
-    // Bind point lights
-
-    // Bind spot lights
-
-    // Bind texture
-
-    // Set tex uniform
-
-    // Set eye position- Get this from active camera
-
-    // Render mesh
-
+	auto MV = V * M;
+	// Set MV matrix uniform
+	glUniformMatrix4fv(eff.get_uniform_location("MV"), 1, GL_FALSE, value_ptr(MV));
+	// Set M matrix uniform
+	glUniformMatrix4fv(eff.get_uniform_location("M"), 1, GL_FALSE, value_ptr(M));
+	// Set N matrix uniform
+	glUniformMatrix3fv(eff.get_uniform_location("N"), 1, GL_FALSE, value_ptr(m.get_transform().get_normal_matrix()));
+	// Bind material
+	renderer::bind(m.get_material(), "mat");
+	// Bind light
+	renderer::bind(light, "light");
+	// Bind texture
+	renderer::bind(tex, 0);
+	// Set tex uniform
+	glUniform1i(eff.get_uniform_location("tex"), 0);
+	// Set eye position
+	glUniform3fv(eff.get_uniform_location("eye_pos"), 1, value_ptr(cam.get_position()));
     // *********************************
 
     // Render mesh
