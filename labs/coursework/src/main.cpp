@@ -63,6 +63,7 @@ bool load_content() {
 	meshes["pyramid"].get_transform().scale = vec3(15.0f, 10.0f, 10.0f);
 	meshes["pyramid"].get_transform().translate(vec3(-10.0f, 5.0f, -30.0f));
 
+
 	// Two thirds scale of previous pyramid
 	meshes["pyramid2"].get_transform().scale = vec3(10.0f, 7.0f, 7.0f);
 	meshes["pyramid2"].get_transform().translate(vec3(-15.0f, 2.5f, -20.0f));
@@ -128,6 +129,9 @@ bool load_content() {
 	eff.add_shader("shaders/simple_texture.frag", GL_FRAGMENT_SHADER);
 	// Build effect
 	eff.build();
+
+	//Set Range
+	
 
 	//Load in Camera properties
 	cam.set_position(vec3(0.0f, 5.0f, 10.0f));
@@ -200,6 +204,8 @@ bool render() {
 		auto MVP = P * V * M;
 		// Set MVP matrix uniform
 		glUniformMatrix4fv(eff.get_uniform_location("MVP"), 1, GL_FALSE, value_ptr(MVP));
+
+
 
 		if (e.first == "plane")
 		{
