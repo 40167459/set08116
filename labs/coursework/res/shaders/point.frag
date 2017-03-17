@@ -29,7 +29,7 @@ uniform sampler2D tex;
 // Incoming position
 layout(location = 0) in vec3 position;
 // Incoming normal
-layout(location = 1) in vec3 normal;
+layout(location = 1) in vec3 transformed_normal;
 // Incoming texture coordinate
 layout(location = 2) in vec2 tex_coord;
 

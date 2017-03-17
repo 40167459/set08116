@@ -11,7 +11,7 @@ free_camera cam;
 texture sand;
 texture stone;
 texture pillar;
-directional_light light;
+point_light light;
 
 bool load_content() {
 	// Create plane mesh
@@ -20,18 +20,10 @@ bool load_content() {
 	// box
 	meshes["box"] = mesh(geometry_builder::create_box());
 
-	// Tetrahedron 
-	/*
-	meshes["tetrahedron"] = mesh(geometry_builder::create_tetrahedron());
-	*/
 	// Pyramid
 	meshes["pyramid"] = mesh(geometry_builder::create_pyramid());
 	meshes["pyramid2"] = mesh(geometry_builder::create_pyramid());
 	meshes["pyramid3"] = mesh(geometry_builder::create_pyramid());
-	/*
-	// Disk
-	meshes["disk"] = mesh(geometry_builder::create_disk());
-	*/
 
 	// Cylinder
 	meshes["cylinder"] = mesh(geometry_builder::create_cylinder());
@@ -40,42 +32,22 @@ bool load_content() {
 	meshes["cylinderTop"] = mesh(geometry_builder::create_cylinder());
 	meshes["cylinderTop2"] = mesh(geometry_builder::create_cylinder());
 
-	/*
-	// Sphere
-	meshes["sphere"] = mesh(geometry_builder::create_sphere());
-	// Torus
-	meshes["torus"] = mesh(geometry_builder::create_torus());
-	*/
-
 	// Set the transforms for your meshes here
 	// 5x scale, move(-10.0f, 2.5f, -30.0f)
 	meshes["box"].get_transform().scale = vec3(15.0f, 1.0f, 1.0f);
 	meshes["box"].get_transform().translate(vec3(-10.0f, 0.5f, -30.0f));
-
-	/*
-	// 4x scale, move(-30.0f, 10.0f, -10.0f)
-    meshes["tetrahedron"].get_transform().scale = vec3(4.0f, 4.0f, 4.0f);
-	meshes["tetrahedron"].get_transform().translate(vec3(-30.0f, 10.0f, -10.0f));
-
-	*/
 	
+
 	// 10x scale, 15x widening, move(-10.0f, 7.5f, -30.0f)
 	meshes["pyramid"].get_transform().scale = vec3(15.0f, 10.0f, 10.0f);
 	meshes["pyramid"].get_transform().translate(vec3(-10.0f, 5.0f, -30.0f));
-
-
+	
 	// Two thirds scale of previous pyramid
 	meshes["pyramid2"].get_transform().scale = vec3(10.0f, 7.0f, 7.0f);
 	meshes["pyramid2"].get_transform().translate(vec3(-15.0f, 2.5f, -20.0f));
 
 	meshes["pyramid3"].get_transform().scale = vec3(13.0f, 9.0f, 9.0f);
 	meshes["pyramid3"].get_transform().translate(vec3(-5.0f, 4.5f, -45.0f));
-	
-	/*
-	// scale(3.0f, 1.0f, 3.0f), move(-10.0f, 11.5f, -30.0f), 180 rotate X axis
-	meshes["disk"].get_transform().scale = vec3(3.0f, 1.0f, 3.0f);
-	meshes["disk"].get_transform().translate(vec3(-10.0f, 11.5f, -30.0f));
-	*/
 
 	// 1.5x scale, move(0.0.f, 2.5f, 0.0f)
 	meshes["cylinder"].get_transform().scale = vec3(1.5f, 5.5f, 1.5f);
@@ -94,44 +66,68 @@ bool load_content() {
 	meshes["cylinderTop2"].get_transform().scale = vec3(2.0f, 0.5f, 2.0f);
 	meshes["cylinderTop2"].get_transform().translate(vec3(0.0f, 5.0f, 5.0f));
 
-	/*
-	// 2.5x scale, move(-25.0f, 10.0f, -25.0f)
-	meshes["sphere"].get_transform().scale = vec3(2.5f, 2.5f, 2.5f);
-	meshes["sphere"].get_transform().translate(vec3(-25.0f, 10.0f, -25.0f));
-
-	// 180 rotate X axis, move(-25.0f, 10.0f, -25.0f)
-	meshes["torus"].get_transform().translate(vec3(-25.0f, 10.0f, -25.0f));
-	meshes["torus"].get_transform().rotate(vec3(half_pi<float>(), 0.0f, 0.0f)); 
-
-	*/
-
 	//Set Materials
-	//Pyramid
+		//All shininess is 25
 
+	//Pyramids
+	meshes["pyramid"].get_material().set_emissive(vec4(0.0f, 0.0f, 0.0f, 1.0f));
+	meshes["pyramid"].get_material().set_diffuse(vec4(1.0f, 1.0f, 1.0f, 1.0f));
+	meshes["pyramid"].get_material().set_specular(vec4(1.0f, 1.0f, 1.0f, 1.0f));
+	meshes["pyramid"].get_material().set_shininess(25.0f);
+	//Pyramid2
+	meshes["pyramid"].get_material().set_emissive(vec4(0.0f, 0.0f, 0.0f, 1.0f));
+	meshes["pyramid"].get_material().set_diffuse(vec4(1.0f, 1.0f, 1.0f, 1.0f));
+	meshes["pyramid"].get_material().set_specular(vec4(1.0f, 1.0f, 1.0f, 1.0f));
+	meshes["pyramid"].get_material().set_shininess(25.0f);
+	//Pyramid3
+	meshes["pyramid"].get_material().set_emissive(vec4(0.0f, 0.0f, 0.0f, 1.0f));
+	meshes["pyramid"].get_material().set_diffuse(vec4(1.0f, 1.0f, 1.0f, 1.0f));
+	meshes["pyramid"].get_material().set_specular(vec4(1.0f, 1.0f, 1.0f, 1.0f));
+	meshes["pyramid"].get_material().set_shininess(25.0f);
 
-
-
-
+	//Cylinder
+	meshes["cylinder"].get_material().set_emissive(vec4(0.0f, 0.0f, 0.0f, 1.0f));
+	meshes["cylinder"].get_material().set_diffuse(vec4(1.0f, 1.0f, 1.0f, 1.0f));
+	meshes["cylinder"].get_material().set_specular(vec4(1.0f, 1.0f, 1.0f, 1.0f));
+	meshes["cylinder"].get_material().set_shininess(25.0f);
+	//Cylinder2
+	meshes["cylinder2"].get_material().set_emissive(vec4(0.0f, 0.0f, 0.0f, 1.0f));
+	meshes["cylinder2"].get_material().set_diffuse(vec4(1.0f, 1.0f, 1.0f, 1.0f));
+	meshes["cylinder2"].get_material().set_specular(vec4(1.0f, 1.0f, 1.0f, 1.0f));
+	meshes["cylinder2"].get_material().set_shininess(25.0f);
+	//Cylinder3
+	meshes["cylinder3"].get_material().set_emissive(vec4(0.0f, 0.0f, 0.0f, 1.0f));
+	meshes["cylinder3"].get_material().set_diffuse(vec4(1.0f, 1.0f, 1.0f, 1.0f));
+	meshes["cylinder3"].get_material().set_specular(vec4(1.0f, 1.0f, 1.0f, 1.0f));
+	meshes["cylinder3"].get_material().set_shininess(25.0f);
+	//CylinderTop
+	meshes["cylinderTop"].get_material().set_emissive(vec4(0.0f, 0.0f, 0.0f, 1.0f));
+	meshes["cylinderTop"].get_material().set_diffuse(vec4(1.0f, 1.0f, 1.0f, 1.0f));
+	meshes["cylinderTop"].get_material().set_specular(vec4(1.0f, 1.0f, 1.0f, 1.0f));
+	meshes["cylinderTop"].get_material().set_shininess(25.0f);
+	//CylinderTop2
+	meshes["cylinderTop2"].get_material().set_emissive(vec4(0.0f, 0.0f, 0.0f, 1.0f));
+	meshes["cylinderTop2"].get_material().set_diffuse(vec4(1.0f, 1.0f, 1.0f, 1.0f));
+	meshes["cylinderTop2"].get_material().set_specular(vec4(1.0f, 1.0f, 1.0f, 1.0f));
+	meshes["cylinderTop2"].get_material().set_shininess(25.0f);
 
 	// Load texture
 	sand = texture("textures/sand3.jpg");
 	stone = texture("textures/pyramid_stones.jpg");
 	pillar = texture("textures/pillar.jpg");
 
-
-	// Set lighting values
-	light.set_ambient_intensity(vec4(0.3f, 0.3f, 0.3f, 1.0f));
+	// Set lighting values, Position (-25, 10, -10)
+	light.set_position(vec3(-25, 10, -10));
+	// Light colour white
 	light.set_light_colour(vec4(1.0f, 1.0f, 1.0f, 1.0f));
-	light.set_direction(vec3(1.0f, 1.0f, -1.0f));
-
+	// Set range to 20
+	light.set_range(2000);
 	// Load in shaders
-	eff.add_shader("shaders/simple_texture.vert", GL_VERTEX_SHADER);
-	eff.add_shader("shaders/simple_texture.frag", GL_FRAGMENT_SHADER);
-	// Build effect
-	eff.build();
+	eff.add_shader("shaders/point.vert", GL_VERTEX_SHADER);
+	eff.add_shader("shaders/point.frag", GL_FRAGMENT_SHADER);
 
-	//Set Range
-	
+	// Build effect
+	eff.build();	
 
 	//Load in Camera properties
 	cam.set_position(vec3(0.0f, 5.0f, 10.0f));
@@ -175,6 +171,9 @@ bool update(float delta_time) {
 		translation.x += 5.0f * delta_time;
 	}
 
+	// Set range
+	light.set_range(2000);
+
 	// Move camera
 	cam.move(translation);
 	// Update the camera
@@ -203,8 +202,24 @@ bool render() {
 		auto P = cam.get_projection();
 		auto MVP = P * V * M;
 		// Set MVP matrix uniform
-		glUniformMatrix4fv(eff.get_uniform_location("MVP"), 1, GL_FALSE, value_ptr(MVP));
-
+		glUniformMatrix4fv(eff.get_uniform_location("MVP"), 1, GL_FALSE, value_ptr(MVP));              
+								
+						 // Set M matrix uniform
+						 glUniformMatrix4fv(eff.get_uniform_location("M"), 1, GL_FALSE, value_ptr(M));
+						 // Set N matrix uniform - remember - 3x3 matrix
+						 glUniformMatrix3fv(eff.get_uniform_location("N"),
+							 1,
+							 GL_FALSE,
+							 value_ptr(m.get_transform().get_normal_matrix()));
+						 // Bind material
+						renderer::bind(m.get_material(), "mat");
+						 // Bind light
+						 renderer::bind(light, "point");
+						
+						 // Set tex uniform
+						 glUniform1i(eff.get_uniform_location("tex"), 0);
+						 // Set eye position- Get this from active camera
+						 glUniform3fv(eff.get_uniform_location("eye_pos"), 1, value_ptr(cam.get_position()));
 
 
 		if (e.first == "plane")
