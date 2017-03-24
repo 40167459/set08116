@@ -117,6 +117,7 @@ bool load_content() {
 	pillar = texture("textures/pillar.jpg");
 
 	// Set lighting values, Position (-25, 10, -10)
+
 	light.set_position(vec3(-25, 10, -10));
 	// Light colour white
 	light.set_light_colour(vec4(1.0f, 1.0f, 1.0f, 1.0f));
