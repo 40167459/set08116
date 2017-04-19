@@ -18,12 +18,19 @@ bool load_content() {
                                 "textures/sahara_dn.jpg", "textures/sahara_rt.jpg", "textures/sahara_lf.jpg"};
   // *********************************
   // Create cube_map
+  glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X, 0, GL_RGBA, 2, 2, 0, GL_RGBA, GL_UNSIGNED_BYTE, "textures/sahara_rt.jpg");
+  glTexImage2D(GL_TEXTURE_CUBE_MAP_NEGATIVE_X, 0, GL_RGBA, 2, 2, 0, GL_RGBA, GL_UNSIGNED_BYTE, "textures/sahara_lf.jpg");
+  glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_Y, 0, GL_RGBA, 2, 2, 0, GL_RGBA, GL_UNSIGNED_BYTE, "textures/sahara_up.jpg");
+  glTexImage2D(GL_TEXTURE_CUBE_MAP_NEGATIVE_Y, 0, GL_RGBA, 2, 2, 0, GL_RGBA, GL_UNSIGNED_BYTE, "textures/sahara_dn.jpg");
+  glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_Z, 0, GL_RGBA, 2, 2, 0, GL_RGBA, GL_UNSIGNED_BYTE, "textures/sahara_bk.jpg");
+  glTexImage2D(GL_TEXTURE_CUBE_MAP_NEGATIVE_Z, 0, GL_RGBA, 2, 2, 0, GL_RGBA, GL_UNSIGNED_BYTE, "textures/sahara_ft.jpg");
 
   // Load in shaders
-
+  eff.add_shader("56_Cube_Maps/shader.frag", GL_FRAGMENT_SHADER);
+  eff.add_shader("56_Cube_Maps/shader.vert", GL_VERTEX_SHADER);
 
   // Build effect
-
+  eff.build();
   // *********************************
 
   // Set camera properties
