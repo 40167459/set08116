@@ -69,44 +69,50 @@ bool load_content() {
 	//Set Materials
 		//All shininess is 25
 
+	//Plane
+	meshes["plane"].get_material().set_emissive(vec4(0.0f, 0.0f, 0.0f, 1.0f));
+	meshes["plane"].get_material().set_diffuse(vec4(1.0f, 1.0f, 1.0f, 1.0f));
+	meshes["plane"].get_material().set_specular(vec4(1.0f, 1.0f, 1.0f, 1.0f));
+	meshes["plane"].get_material().set_shininess(75.0f);
+
 	//Pyramids
-	meshes["pyramid"].get_material().set_emissive(vec4(0.0f, 0.0f, 0.0f, 1.0f));
+	meshes["pyramid"].get_material().set_emissive(vec4(1.0f, 1.0f, 1.0f, 1.0f));
 	meshes["pyramid"].get_material().set_diffuse(vec4(1.0f, 1.0f, 1.0f, 1.0f));
 	meshes["pyramid"].get_material().set_specular(vec4(1.0f, 1.0f, 1.0f, 1.0f));
 	meshes["pyramid"].get_material().set_shininess(25.0f);
 	//Pyramid2
-	meshes["pyramid"].get_material().set_emissive(vec4(0.0f, 0.0f, 0.0f, 1.0f));
-	meshes["pyramid"].get_material().set_diffuse(vec4(1.0f, 1.0f, 1.0f, 1.0f));
-	meshes["pyramid"].get_material().set_specular(vec4(1.0f, 1.0f, 1.0f, 1.0f));
-	meshes["pyramid"].get_material().set_shininess(25.0f);
+	meshes["pyramid2"].get_material().set_emissive(vec4(0.5f, 0.5f, 0.5f, 0.5f));
+	meshes["pyramid2"].get_material().set_diffuse(vec4(1.0f, 1.0f, 1.0f, 1.0f));
+	meshes["pyramid2"].get_material().set_specular(vec4(1.0f, 1.0f, 1.0f, 1.0f));
+	meshes["pyramid2"].get_material().set_shininess(25.0f);
 	//Pyramid3
-	meshes["pyramid"].get_material().set_emissive(vec4(0.0f, 0.0f, 0.0f, 1.0f));
-	meshes["pyramid"].get_material().set_diffuse(vec4(1.0f, 1.0f, 1.0f, 1.0f));
-	meshes["pyramid"].get_material().set_specular(vec4(1.0f, 1.0f, 1.0f, 1.0f));
-	meshes["pyramid"].get_material().set_shininess(25.0f);
+	meshes["pyramid3"].get_material().set_emissive(vec4(0.5f, 0.5f, 0.5f, 0.5f));
+	meshes["pyramid3"].get_material().set_diffuse(vec4(1.0f, 1.0f, 1.0f, 1.0f));
+	meshes["pyramid3"].get_material().set_specular(vec4(1.0f, 1.0f, 1.0f, 1.0f));
+	meshes["pyramid3"].get_material().set_shininess(25.0f);
 
 	//Cylinder
-	meshes["cylinder"].get_material().set_emissive(vec4(0.0f, 0.0f, 0.0f, 1.0f));
+	meshes["cylinder"].get_material().set_emissive(vec4(0.5f, 0.5f, 0.5f, 0.5f));
 	meshes["cylinder"].get_material().set_diffuse(vec4(1.0f, 1.0f, 1.0f, 1.0f));
 	meshes["cylinder"].get_material().set_specular(vec4(1.0f, 1.0f, 1.0f, 1.0f));
 	meshes["cylinder"].get_material().set_shininess(25.0f);
 	//Cylinder2
-	meshes["cylinder2"].get_material().set_emissive(vec4(0.0f, 0.0f, 0.0f, 1.0f));
+	meshes["cylinder2"].get_material().set_emissive(vec4(0.5f, 0.5f, 0.5f, 0.5f));
 	meshes["cylinder2"].get_material().set_diffuse(vec4(1.0f, 1.0f, 1.0f, 1.0f));
 	meshes["cylinder2"].get_material().set_specular(vec4(1.0f, 1.0f, 1.0f, 1.0f));
 	meshes["cylinder2"].get_material().set_shininess(25.0f);
 	//Cylinder3
-	meshes["cylinder3"].get_material().set_emissive(vec4(0.0f, 0.0f, 0.0f, 1.0f));
+	meshes["cylinder3"].get_material().set_emissive(vec4(0.5f, 0.5f, 0.5f, 0.5f));
 	meshes["cylinder3"].get_material().set_diffuse(vec4(1.0f, 1.0f, 1.0f, 1.0f));
 	meshes["cylinder3"].get_material().set_specular(vec4(1.0f, 1.0f, 1.0f, 1.0f));
 	meshes["cylinder3"].get_material().set_shininess(25.0f);
 	//CylinderTop
-	meshes["cylinderTop"].get_material().set_emissive(vec4(0.0f, 0.0f, 0.0f, 1.0f));
+	meshes["cylinderTop"].get_material().set_emissive(vec4(0.5f, 0.5f, 0.5f, 0.5f));
 	meshes["cylinderTop"].get_material().set_diffuse(vec4(1.0f, 1.0f, 1.0f, 1.0f));
 	meshes["cylinderTop"].get_material().set_specular(vec4(1.0f, 1.0f, 1.0f, 1.0f));
 	meshes["cylinderTop"].get_material().set_shininess(25.0f);
 	//CylinderTop2
-	meshes["cylinderTop2"].get_material().set_emissive(vec4(0.0f, 0.0f, 0.0f, 1.0f));
+	meshes["cylinderTop2"].get_material().set_emissive(vec4(0.5f, 0.5f, 0.5f, 0.5f));
 	meshes["cylinderTop2"].get_material().set_diffuse(vec4(1.0f, 1.0f, 1.0f, 1.0f));
 	meshes["cylinderTop2"].get_material().set_specular(vec4(1.0f, 1.0f, 1.0f, 1.0f));
 	meshes["cylinderTop2"].get_material().set_shininess(25.0f);
@@ -118,7 +124,7 @@ bool load_content() {
 
 	// Set lighting values, Position (-25, 10, -10)
 
-	light.set_position(vec3(-25, 10, -10));
+	light.set_position(vec3(-10.0f, 20.0f, -30.0f));
 	// Light colour white
 	light.set_light_colour(vec4(1.0f, 1.0f, 1.0f, 1.0f));
 	// Set range to 20
@@ -173,7 +179,7 @@ bool update(float delta_time) {
 	}
 
 	// Set range
-	light.set_range(2000);
+	light.set_range(200);
 
 	// Move camera
 	cam.move(translation);
@@ -189,12 +195,7 @@ bool render() {
 	// Render meshes
 	for (auto &e : meshes) {
 		auto m = e.second;
-		/*
-		// Bind material
-		renderer::bind(m.get_material(), "mat");
-		// Bind light
-		renderer::bind(light, "light");
-		*/
+		
 		// Bind effect
 		renderer::bind(eff);
 		// Create MVP matrix
