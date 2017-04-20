@@ -14,6 +14,8 @@ texture pillar;
 point_light light;
 
 bool load_content() {
+
+
 	// Create plane mesh
 	meshes["plane"] = mesh(geometry_builder::create_plane());
 
@@ -192,6 +194,7 @@ bool update(float delta_time) {
 }
 
 bool render() {
+
 	// Render meshes
 	for (auto &e : meshes) {
 		auto m = e.second;
