@@ -48,7 +48,10 @@ void main() {
   // Calculate light dir
   vec3 light_dir = normalize(point.position - vertex_position);
   // Now use standard phong shading but using calculated light colour and direction
-  // - note no ambient
+  
+   // Calculate ambient component
+  vec4 ambient = light.ambient_intensity * mat.diffuse_reflection;
+
   // Calculate diffuse component
   float kd = max(dot(transformed_normal, light_dir), 0.0);
   vec4 diffuse = kd * (mat.diffuse_reflection * light_colour);

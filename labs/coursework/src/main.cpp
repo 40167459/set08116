@@ -7,14 +7,28 @@ using namespace glm;
 
 map<string, mesh> meshes;
 effect eff;
+effect tex_eff;
 free_camera cam;
+texture alpha_map;
 texture sand;
 texture stone;
 texture pillar;
 point_light light;
+frame_buffer frame;
+geometry screen_quad;
+
 
 bool load_content() {
 
+	// Create frame buffer - use screen width and height
+	frame = frame_buffer(renderer::get_screen_width(), renderer::get_screen_height());
+	// Create screen quad
+	vector<vec3> positions{ vec3(-1.0f, -1.0f, 0.0f), vec3(1.0f, -1.0f, 0.0f), vec3(-1.0f, 1.0f, 0.0f),
+		vec3(1.0f, 1.0f, 0.0f) };
+	vector<vec2> tex_coords{ vec2(0.0, 0.0), vec2(1.0f, 0.0f), vec2(0.0f, 1.0f), vec2(1.0f, 1.0f) };
+	screen_quad.add_buffer(positions, BUFFER_INDEXES::POSITION_BUFFER);
+	screen_quad.add_buffer(tex_coords, BUFFER_INDEXES::TEXTURE_COORDS_0);
+	screen_quad.set_type(GL_TRIANGLE_STRIP);
 
 	// Create plane mesh
 	meshes["plane"] = mesh(geometry_builder::create_plane());
@@ -124,8 +138,9 @@ bool load_content() {
 	stone = texture("textures/pyramid_stones.jpg");
 	pillar = texture("textures/pillar.jpg");
 
-	// Set lighting values, Position (-25, 10, -10)
+	alpha_map = texture("textures/alpha_map.png");
 
+	// Set lighting values, Position (-25, 10, -10)
 	light.set_position(vec3(-10.0f, 20.0f, -30.0f));
 	// Light colour white
 	light.set_light_colour(vec4(1.0f, 1.0f, 1.0f, 1.0f));
@@ -135,8 +150,12 @@ bool load_content() {
 	eff.add_shader("shaders/point.vert", GL_VERTEX_SHADER);
 	eff.add_shader("shaders/point.frag", GL_FRAGMENT_SHADER);
 
+	tex_eff.add_shader("27_Texturing_Shader/simple_texture.vert", GL_VERTEX_SHADER);
+	tex_eff.add_shader("71_Greyscale/greyscale.frag", GL_FRAGMENT_SHADER);
+
 	// Build effect
-	eff.build();	
+	eff.build();
+	tex_eff.build();
 
 	//Load in Camera properties
 	cam.set_position(vec3(0.0f, 5.0f, 10.0f));
@@ -195,6 +214,11 @@ bool update(float delta_time) {
 
 bool render() {
 
+	// Set render target to frame buffer
+	renderer::set_render_target(frame);
+	// Clear frame
+	renderer::clear();
+
 	// Render meshes
 	for (auto &e : meshes) {
 		auto m = e.second;
@@ -251,6 +275,25 @@ bool render() {
 		// Render mesh
 		renderer::render(m);
 	}
+
+	// Set render target back to the screen
+	renderer::set_render_target();
+	// Bind Tex effect
+	renderer::bind(tex_eff);
+	// MVP is now the identity matrix
+	auto MVP = glm::mat4();
+	// Set MVP matrix uniform
+	glUniformMatrix4fv(tex_eff.get_uniform_location("MVP"), 1, GL_FALSE, value_ptr(MVP));
+	// Bind texture from frame buffer
+	renderer::bind(frame.get_frame(), 0);
+	// Set the tex uniform
+	glUniform1i(tex_eff.get_uniform_location("tex"), 0);
+	// Bind alpha texture to TU, 1
+	renderer::bind(alpha_map, 1);
+	// Set the tex uniform, 1
+	glUniform1i(tex_eff.get_uniform_location("tex"), 1);
+	// Render the screen quad
+	renderer::render(screen_quad);
 
 	return true;
 }
