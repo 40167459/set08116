@@ -22,7 +22,7 @@ bool greyscale = false;
 
 
 bool load_content() {
-
+	//
 	// Create frame buffer - use screen width and height
 	frame = frame_buffer(renderer::get_screen_width(), renderer::get_screen_height());
 	// Create screen quad
