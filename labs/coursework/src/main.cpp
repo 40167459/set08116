@@ -158,7 +158,7 @@ bool load_content() {
 	tex_eff2.add_shader("shaders/greyscale.frag", GL_FRAGMENT_SHADER);
 
 
-	// Build effect
+	// Build effects
 	eff.build();
 	tex_eff.build();
 	tex_eff2.build();
@@ -242,7 +242,7 @@ bool render() {
 	// Render meshes
 	for (auto &e : meshes) {
 		auto m = e.second;
-		
+		//
 		// Bind effect
 		renderer::bind(eff);
 		// Create MVP matrix
