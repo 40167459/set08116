@@ -8,6 +8,7 @@ using namespace glm;
 map<string, mesh> meshes;
 effect eff;
 effect tex_eff;
+effect tex_eff2;
 free_camera cam;
 texture alpha_map;
 texture sand;
@@ -16,6 +17,8 @@ texture pillar;
 point_light light;
 frame_buffer frame;
 geometry screen_quad;
+bool masking = false;
+bool greyscale = false;
 
 
 bool load_content() {
@@ -134,11 +137,11 @@ bool load_content() {
 	meshes["cylinderTop2"].get_material().set_shininess(25.0f);
 
 	// Load texture
-	sand = texture("textures/sand3.jpg");
-	stone = texture("textures/pyramid_stones.jpg");
-	pillar = texture("textures/pillar.jpg");
+	sand = texture("C:/Users/40167459/Desktop/set08116/labs/coursework/res/textures/sand3.jpg");
+	stone = texture("C:/Users/40167459/Desktop/set08116/labs/coursework/res/textures/pyramid_stones.jpg");
+	pillar = texture("C:/Users/40167459/Desktop/set08116/labs/coursework/res/textures/pillar.jpg");
 
-	alpha_map = texture("textures/alpha_map.png");
+	alpha_map = texture("C:/Users/40167459/Desktop/set08116/labs/res/textures/checker.png");
 
 	// Set lighting values, Position (-25, 10, -10)
 	light.set_position(vec3(-10.0f, 20.0f, -30.0f));
@@ -149,13 +152,16 @@ bool load_content() {
 	// Load in shaders
 	eff.add_shader("shaders/point.vert", GL_VERTEX_SHADER);
 	eff.add_shader("shaders/point.frag", GL_FRAGMENT_SHADER);
+	tex_eff.add_shader("shaders/masking.frag", GL_FRAGMENT_SHADER);
+	tex_eff.add_shader("shaders/simple_textures.vert", GL_VERTEX_SHADER);
+	tex_eff2.add_shader("shaders/simple_textures.vert", GL_VERTEX_SHADER);
+	tex_eff2.add_shader("shaders/greyscale.frag", GL_FRAGMENT_SHADER);
 
-	tex_eff.add_shader("27_Texturing_Shader/simple_texture.vert", GL_VERTEX_SHADER);
-	tex_eff.add_shader("71_Greyscale/greyscale.frag", GL_FRAGMENT_SHADER);
 
 	// Build effect
 	eff.build();
 	tex_eff.build();
+	tex_eff2.build();
 
 	//Load in Camera properties
 	cam.set_position(vec3(0.0f, 5.0f, 10.0f));
@@ -198,6 +204,18 @@ bool update(float delta_time) {
 	if (glfwGetKey(renderer::get_window(), 'D')) {
 		translation.x += 5.0f * delta_time;
 	}
+	if (glfwGetKey(renderer::get_window(), '1')) {
+		masking = true;
+	}
+	if (glfwGetKey(renderer::get_window(), '2')) {
+		masking = false;
+	}
+	if (glfwGetKey(renderer::get_window(), '3')) {
+		greyscale = true;
+	}
+	if (glfwGetKey(renderer::get_window(), '4')) {
+		greyscale = false;
+	}
 
 	// Set range
 	light.set_range(200);
@@ -214,11 +232,13 @@ bool update(float delta_time) {
 
 bool render() {
 
-	// Set render target to frame buffer
-	renderer::set_render_target(frame);
-	// Clear frame
-	renderer::clear();
-
+	if (masking == true || greyscale == true)
+	{
+		// Set render target to frame buffer
+		renderer::set_render_target(frame);
+		// Clear frame
+		renderer::clear();
+	}
 	// Render meshes
 	for (auto &e : meshes) {
 		auto m = e.second;
@@ -273,27 +293,49 @@ bool render() {
 		}
 
 		// Render mesh
+
 		renderer::render(m);
 	}
 
-	// Set render target back to the screen
-	renderer::set_render_target();
-	// Bind Tex effect
-	renderer::bind(tex_eff);
-	// MVP is now the identity matrix
-	auto MVP = glm::mat4();
-	// Set MVP matrix uniform
-	glUniformMatrix4fv(tex_eff.get_uniform_location("MVP"), 1, GL_FALSE, value_ptr(MVP));
-	// Bind texture from frame buffer
-	renderer::bind(frame.get_frame(), 0);
-	// Set the tex uniform
-	glUniform1i(tex_eff.get_uniform_location("tex"), 0);
-	// Bind alpha texture to TU, 1
-	renderer::bind(alpha_map, 1);
-	// Set the tex uniform, 1
-	glUniform1i(tex_eff.get_uniform_location("tex"), 1);
-	// Render the screen quad
-	renderer::render(screen_quad);
+	if(masking == true) {
+
+		// Set render target back to the screen
+		renderer::set_render_target();
+		// Bind Tex effect
+		renderer::bind(tex_eff);
+		// MVP is now the identity matrix
+		auto MVP = glm::mat4();
+		// Set MVP matrix uniform
+		glUniformMatrix4fv(tex_eff.get_uniform_location("MVP"), 1, GL_FALSE, value_ptr(MVP));
+		// Bind texture from frame buffer
+		renderer::bind(frame.get_frame(), 0);
+		// Set the tex uniform
+		glUniform1i(tex_eff.get_uniform_location("tex"), 0);
+		// Bind alpha texture to TU, 1
+		renderer::bind(alpha_map, 1);
+		// Set the tex uniform, 1
+		glUniform1i(tex_eff.get_uniform_location("tex"), 1);
+		// Render the screen quad
+		renderer::render(screen_quad);
+	}
+
+	if (greyscale == true) {
+
+		// Set render target back to the screen
+		renderer::set_render_target();
+		// Bind Tex effect
+		renderer::bind(tex_eff2);
+		// MVP is now the identity matrix
+		auto MVP = glm::mat4();
+		// Set MVP matrix uniform
+		glUniformMatrix4fv(tex_eff2.get_uniform_location("MVP"), 1, GL_FALSE, value_ptr(MVP));
+		// Bind texture from frame buffer
+		renderer::bind(frame.get_frame(), 0);
+		// Set the tex uniform
+		glUniform1i(tex_eff2.get_uniform_location("tex"), 0);
+		// Render the screen quad
+		renderer::render(screen_quad);
+	}
 
 	return true;
 }
